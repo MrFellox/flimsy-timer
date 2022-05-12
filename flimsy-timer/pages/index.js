@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import TimerButton from '../components/TimerButton/TimerButton';
+import Script from 'next/script'
 
 export default function Home() {
   return (
@@ -9,12 +10,10 @@ export default function Home() {
         <title>Flimsy Timer</title>
         <meta name="description" content="An opensource speedcubing timer" />
         <link rel="icon" href='/favicon.ico' />
-
-        <script src='/timer.js'></script>
-
       </Head>
 
       <>
+        <Script src='/timer.js' />
         <nav className='bg-sky-700 w-screen h-10 top-0 rounded-b'>
           <div className='container'>
             <Image
@@ -29,7 +28,7 @@ export default function Home() {
         </nav>
 
         <div className='mt-8 text-white'>
-          <h1 id='timer' aria-active='false' className='mt-8 text-8xl text-center subpixel-antialiased font-extrabold'>0.00
+          <h1 id='timer' className='mt-8 text-8xl text-center subpixel-antialiased font-extrabold'>0.00
           </h1>
         </div>
 
