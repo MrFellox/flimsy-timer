@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import TimerButton from '../components/TimerButton/TimerButton';
 import Script from 'next/script'
 import { isMobile } from 'react-device-detect'

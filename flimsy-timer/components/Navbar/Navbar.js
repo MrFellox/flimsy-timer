@@ -1,3 +1,6 @@
+import Image from 'next/image';
+import Link from 'next/link'
+
 export default function Navbar() {
     return (
         <>
@@ -11,6 +14,8 @@ export default function Navbar() {
                         alt='Logo'
                         loading='lazy'
                     />
+
+                    <Link className='float-right align-middle mx-4 text-white font-semibold' href='/settings'>Settings</Link>
                 </div>
             </nav>
         </>
