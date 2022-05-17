@@ -42,8 +42,6 @@ export default function Home(props) {
         </div>
 
         <div id='buttonsWrapper' className='mt-4 text-center hidden'>
-          <TimerButton onclick='' text='+' tooltip='Add a solve' id='add' />
-
           <TimerButton onclick='' text='+2' tooltip='Set solve as +2' id='add2' />
 
           <TimerButton text='DNF' tooltip='Set solve as DNF' id='dnf' />
