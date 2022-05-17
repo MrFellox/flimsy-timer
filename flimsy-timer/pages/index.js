@@ -3,14 +3,24 @@ import TimerButton from '../components/TimerButton/TimerButton';
 import Script from 'next/script'
 import Navbar from '../components/Navbar/Navbar';
 
+function gen333Scramble() {
+  let scramble = "";
+  let j, c, b, m, r;
+  for (c = b = j = 25, r = Math.random; j; c + b - 5 | c - m && b - m ? scramble += ("URFBLD"[j--, c = b, b = m] + " 2'"[0 | r() * 3] + " ") : 0)m = 0 | r() * 6
 
-function setPlus2() {
-  // Get the time
-
-
+  return scramble;
 }
 
-export default function Home() {
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      scramble: gen333Scramble()
+    }
+  }
+}
+
+export default function Home(props) {
+
   return (
     <div className='bg-neutral-900'>
       <Head>
@@ -23,7 +33,7 @@ export default function Home() {
         <Script src='/js/timer.js' />
         <Navbar />
 
-        <p id='scramble' className='mt-6 text-white font-bold text-xl font-mono text-center'>L2 R2 U2 F2 L' D' R2 D</p>
+        <p id='scramble' className='mt-6 text-white font-bold text-xl font-mono text-center'>{props.scramble}</p>
 
 
         <div className='mt-8 text-white'>
