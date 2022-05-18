@@ -17,11 +17,10 @@ solves.forEach(solve => {
     scramble.className = 'text-white subpixel-antialiased ml-4 my-2 text-2xl font-mono font-semibold'
     scramble.textContent = solve.scramble
 
-    let preview = document.createElement('twisty-player')
-    preview.setAttribute('alg', solve.scramble)
-    preview.setAttribute('background', 'none')
+    let preview = document.createElement('scramble-display')
+    preview.setAttribute('scramble', solve.scramble)
     preview.className = 'ml-12 my-2'
-    preview.style.background = '#1C1917'
+    preview.style.width = '12em'
 
     div.appendChild(time)
     div.appendChild(scramble)

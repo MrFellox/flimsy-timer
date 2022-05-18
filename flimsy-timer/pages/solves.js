@@ -9,7 +9,8 @@ export default function Solves() {
                 <title>Flimsy Timer - Solves</title>
             </Head>
 
-            <script className='ml-12' src="https://cdn.cubing.net/js/cubing/twisty" type="module"></script>
+            <script src="https://cdn.cubing.net/js/scramble-display" type="module"></script>
+
             <div className='bg-stone-900 border shadow ml-4 shadow-sky-700 rounded-lg w-11/12 h-fit py-2 content-center my-8 hidden'></div>
             <h1 className='text-white font-extrabold subpixel-antialiased ml-4 my-2 text-2xl hidden'></h1>
 
