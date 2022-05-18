@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import TimerButton from '../components/TimerButton/TimerButton';
+import TimerButton from '../components/TimerButton';
 import Script from 'next/script'
-import Navbar from '../components/Navbar/Navbar';
+import Navbar from '../components/Navbar';
 
 export async function getServerSideProps(context) {
   // Fetch a 333 scramble

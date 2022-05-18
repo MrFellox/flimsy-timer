@@ -86,7 +86,7 @@ window.addEventListener('keyup', async function (e) {
 
         // Update scramble and show it
 
-        const data = await fetch(`${mainURL}/api/scrambles/333`)
+        const data = await fetch(`/api/scrambles/333`)
         const response = await data.json()
 
         const scramble = document.getElementById('scramble')
