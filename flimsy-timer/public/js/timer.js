@@ -6,13 +6,6 @@ let startClock = 3;
 
 console.log('timer.js file loaded.')
 
-function gen333Scramble() {
-    let scramble = "";
-
-    for (c = b = j = 25, r = Math.random; j; c + b - 5 | c - m && b - m ? scramble += ("URFBLD"[j--, c = b, b = m] + " 2'"[0 | r() * 3] + " ") : 0)m = 0 | r() * 6
-    return scramble;
-}
-
 // Updates the elapsed time
 function showTime() {
     if (timerActive == true) {
@@ -55,7 +48,7 @@ window.addEventListener('keypress', (e) => {
     }
 })
 
-window.addEventListener('keyup', (e) => {
+window.addEventListener('keyup', async function (e) {
 
     // Start timer
     if (e.code === 'Space' && timerActive == false && timerClock > startClock) {
@@ -92,8 +85,12 @@ window.addEventListener('keyup', (e) => {
 
 
         // Update scramble and show it
+
+        const data = await fetch(`${mainURL}/api/scrambles/333`)
+        const response = await data.json()
+
         const scramble = document.getElementById('scramble')
-        scramble.textContent = gen333Scramble()
+        scramble.textContent = response.scramble
 
         document.getElementById('scramble').classList.remove('hidden')
     }

@@ -3,18 +3,17 @@ import TimerButton from '../components/TimerButton/TimerButton';
 import Script from 'next/script'
 import Navbar from '../components/Navbar/Navbar';
 
-function gen333Scramble() {
-  let scramble = "";
-  let j, c, b, m, r;
-  for (c = b = j = 25, r = Math.random; j; c + b - 5 | c - m && b - m ? scramble += ("URFBLD"[j--, c = b, b = m] + " 2'"[0 | r() * 3] + " ") : 0)m = 0 | r() * 6
-
-  return scramble;
-}
-
 export async function getServerSideProps(context) {
+  // Fetch a 333 scramble
+
+  let url = `http://${context.req.headers.host}/api/scrambles/333`
+  const data = await fetch(url)
+  const response = await data.json()
+
+
   return {
     props: {
-      scramble: gen333Scramble()
+      scramble: response.scramble
     }
   }
 }
