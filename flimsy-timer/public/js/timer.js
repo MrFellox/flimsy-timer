@@ -6,6 +6,12 @@ let startClock = 3;
 
 console.log('timer.js file loaded.')
 
+// Check local storage
+
+if (localStorage.getItem('data') == null) {
+    localStorage.setItem('data', '{"solves": []}');
+}
+
 // Updates the elapsed time
 function showTime() {
     if (timerActive == true) {
@@ -83,6 +89,23 @@ window.addEventListener('keyup', async function (e) {
         document.getElementById('buttonsWrapper').classList.remove('hidden')
         document.getElementById('appNav').classList.remove('hidden')
 
+        // Save solve
+
+        solve = {
+            time: timer.textContent,
+            scramble: document.getElementById('scramble').textContent,
+            isDNF: false,
+            isPlus2: false,
+            date: new Date()
+
+        }
+
+        let solveData = this.localStorage.getItem('data')
+        solveData = JSON.parse(solveData)
+
+        solveData.solves.push(solve)
+
+        this.localStorage.setItem('data', JSON.stringify(solveData))
 
         // Update scramble and show it
 
