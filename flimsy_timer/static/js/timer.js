@@ -74,7 +74,7 @@ window.addEventListener('keyup', async function (e) {
 
         // Hide timer buttons and scramble and nav
         document.getElementById('buttonsWrapper').classList.add('hidden')
-        document.getElementById('scramble').classList.add('hidden')
+        document.getElementById('scramble').classList.add('invisible')
 
         setTimeout(showTime, 10);
     }
@@ -119,6 +119,6 @@ window.addEventListener('keyup', async function (e) {
         const scramble = document.getElementById('scramble')
         scramble.textContent = response
 
-        document.getElementById('scramble').classList.remove('hidden')
+        document.getElementById('scramble').classList.remove('invisible')
     }
 })
