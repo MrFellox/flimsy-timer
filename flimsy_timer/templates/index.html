@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Flimsy Timer
+{% endblock %}
+
+{% block head %}
+<script src='{{ url_for("static", filename="js/timer.js") }}' defer></script>
+{% endblock %}
+
+
+{% block content %}
+<p id='scramble' class='mt-6 text-white font-bold text-xl font-mono text-center'>{props.scramble}</p>
+
+
+<div class='mt-8 text-white'>
+    <h1 id='timer' class='mt-8 text-9xl text-center subpixel-antialiased font-extrabold'>0.00
+    </h1>
+</div>
+
+<div id='buttonsWrapper' class='mt-4 text-center hidden'>
+    <button id=plusTwo
+        class="w-16 bg-neutral-900 hover:bg-neutral-700 rounded-md text-center align-middle text-white transition-all duration-200 mx-2 font-mono text-sm font-semibold"
+        title="Sets solve as +2">+2</button>
+
+    <button id=dnf
+        class="w-16 bg-neutral-900 hover:bg-neutral-700 rounded-md text-center align-middle text-white transition-all duration-200 mx-2 font-mono text-sm font-semibold"
+        title='Sets solve as DNF'>DNF</button>
+</div>
+{% endblock %}

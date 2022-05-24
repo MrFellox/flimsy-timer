@@ -15,6 +15,9 @@ if (localStorage.getItem('data') == null) {
 // Updates the elapsed time
 function showTime() {
     if (timerActive == true) {
+
+        const timer = document.getElementById('timer');
+
         let now = Date.now();
 
         // Parse elapsed minutes, seconds and ms.
@@ -70,7 +73,6 @@ window.addEventListener('keyup', async function (e) {
         // Hide timer buttons and scramble and nav
         document.getElementById('buttonsWrapper').classList.add('hidden')
         document.getElementById('scramble').classList.add('hidden')
-        document.getElementById('appNav').classList.add('hidden')
 
         setTimeout(showTime, 10);
     }
@@ -87,7 +89,6 @@ window.addEventListener('keyup', async function (e) {
 
         // Show timerbuttons and nav
         document.getElementById('buttonsWrapper').classList.remove('hidden')
-        document.getElementById('appNav').classList.remove('hidden')
 
         // Save solve
 
@@ -109,11 +110,11 @@ window.addEventListener('keyup', async function (e) {
 
         // Update scramble and show it
 
-        const data = await fetch(`/api/scrambles/333`)
-        const response = await data.json()
+        const data = await fetch(`/api/gen333scramble`)
+        const response = await data.text()
 
         const scramble = document.getElementById('scramble')
-        scramble.textContent = response.scramble
+        scramble.textContent = response
 
         document.getElementById('scramble').classList.remove('hidden')
     }
