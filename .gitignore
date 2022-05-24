@@ -3,3 +3,4 @@ package-lock.json
 venv/
 __pycache__/
 google_creds.json
+.env

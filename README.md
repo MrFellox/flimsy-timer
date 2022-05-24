@@ -14,7 +14,4 @@ Run from binaries or clone the repo and follow these steps:
 
 ```
 GOOGLE_SERVICE_ACCOUNT_PATH = <path>
-
-```bash
-pip install ./pythonnet-2.5.2-cp39-cp39-win_amd64.whl
 ```
