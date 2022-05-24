@@ -1,17 +1,9 @@
+import mimetypes
 from flimsy_timer import app, loginmanager, db
+from flimsy_timer.scrambles import gen333scramble
 from flimsy_timer.models import User
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request, Response
 from flask_login import login_required
-
-#* Code from https://replit.com/talk/share/Rubiks-cube-scramble-generator/116900
-import random
-
-scrambles3x3 = ["R","R'","R2","L","L'","L2","U","U'","U2","D","D'","D2","F","F'","F2","B","B'","B2"]
-scrambles2x2 = ["R","R'","R2","L","L'","L2","U","U'","U2","D","D'","D2","F","F'","F2","B","B'","B2"]
-scramblespyraminx = ["R","R'","R2","L","L'","L2","U","U'","U2","B","B'","B2","l","l'","r","r'","u","u'","b","b'"]
-
-num = 20
-add = 20
 
 @loginmanager.user_loader
 def load_user(user_id):
@@ -21,30 +13,39 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', scramble = gen333scramble())
 
 @app.route('/login')
 def login():
     return render_template('login.html')
 
+# Database
+
+@app.route('/api/save', methods=['POST'])
+def save_solve():
+
+    try:
+        data = request.get_json()
+        print('===')
+        print(type(data))
+
+        print(data)
+        return Response("", 200, mimetype='application/json')
+
+    except Exception as e:
+        print(e)
+        return Response(response = "", status = 500, mimetype='application/json') 
+    
+    # db.collection('solves').document().set({
+    #     'user_id': user_id,
+    #     'duration': duration,
+    #     'scramble': scramble,
+    #     'puzzle': puzzle
+    # })
+
+    # print('saved')
+    # return 200
+
 @app.route('/api/gen333scramble')
-def gen333scramble():
-    that = 'empty'
-    new = scrambles3x3.copy()
-    add = 20
-
-    num = add
-    scramble = ''
-
-    for i in range(num):
-        this = random.choice(new)
-
-        if this == that:
-            num += 1
-            continue
-
-        that = this
-        scramble += this + ' '
-
-    this = 'empty'
-    return scramble
+def generate333():
+    return gen333scramble()

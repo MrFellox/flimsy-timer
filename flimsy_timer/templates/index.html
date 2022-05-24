@@ -5,12 +5,14 @@ Flimsy Timer
 {% endblock %}
 
 {% block head %}
+<span id='userId' class='hidden'>45qe8I8DEwEdOlG73T4p</span>
+
 <script src='{{ url_for("static", filename="js/timer.js") }}' defer></script>
 {% endblock %}
 
 
 {% block content %}
-<p id='scramble' class='mt-6 text-white font-bold text-xl font-mono text-center'>{props.scramble}</p>
+<p id='scramble' class='mt-6 text-white font-bold text-xl font-mono text-center'>{{ scramble }}</p>
 
 
 <div class='mt-8 text-white'>

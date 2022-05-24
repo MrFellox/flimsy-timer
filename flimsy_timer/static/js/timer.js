@@ -4,6 +4,8 @@ let timerActive = false;
 let timerClock = 0;
 let startClock = 3;
 
+const userId = document.getElementById('userId').textContent;
+
 console.log('timer.js file loaded.')
 
 // Check local storage
@@ -90,23 +92,24 @@ window.addEventListener('keyup', async function (e) {
         // Show timerbuttons and nav
         document.getElementById('buttonsWrapper').classList.remove('hidden')
 
-        // Save solve
+        // Request database to save solve
 
-        solve = {
+        const xhttp = new XMLHttpRequest();
+        let now = new Date()
+        let scrambleToSave = document.getElementById('scramble').textContent;
+
+        // xhttp.open('POST', `/save/${userId}/${timer.textContent}/${scrambleToSave}/333`, true);
+        xhttp.open('POST', `/api/save`, true);
+
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify({
             time: timer.textContent,
-            scramble: document.getElementById('scramble').textContent,
+            scramble: scrambleToSave,
             isDNF: false,
             isPlus2: false,
-            date: new Date()
-
-        }
-
-        let solveData = this.localStorage.getItem('data')
-        solveData = JSON.parse(solveData)
-
-        solveData.solves.push(solve)
-
-        this.localStorage.setItem('data', JSON.stringify(solveData))
+            date: now.toISOString(),
+            puzzle: '333'
+        }));
 
         // Update scramble and show it
 
