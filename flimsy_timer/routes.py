@@ -1,9 +1,10 @@
-import mimetypes
 from flimsy_timer import app, loginmanager, db
 from flimsy_timer.scrambles import gen333scramble
 from flimsy_timer.models import User
 from flask import render_template, flash, redirect, url_for, request, Response
 from flask_login import login_required
+from dateutil import parser
+import datetime
 
 @loginmanager.user_loader
 def load_user(user_id):
@@ -23,13 +24,24 @@ def login():
 
 @app.route('/api/save', methods=['POST'])
 def save_solve():
-
     try:
         data = request.get_json()
-        print('===')
-        print(type(data))
+        
+        doc_ref = db.collection('solves').document()
 
-        print(data)
+        # Parse JS ISO string to datetime.datetime
+
+        date = parser.parse(data['date'])
+        
+        doc_ref.set({
+            'solve_time': data['solveTime'],
+            'scramble': data['scramble'],
+            'is_dnf': data['isDNF'],
+            'is_plus_2': data['isPlus2'],
+            'date': date,
+            'puzzle': data['puzzle']
+        })
+        
         return Response("", 200, mimetype='application/json')
 
     except Exception as e:

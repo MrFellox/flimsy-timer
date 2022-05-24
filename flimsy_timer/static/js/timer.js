@@ -103,7 +103,7 @@ window.addEventListener('keyup', async function (e) {
 
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify({
-            time: timer.textContent,
+            solveTime: timer.textContent,
             scramble: scrambleToSave,
             isDNF: false,
             isPlus2: false,
