@@ -20,10 +20,10 @@ Flimsy Timer | Solves
             <p class='mt-1 font-mono font-bold text-md text-neutral-900'>{{ solve.scramble }}</p>
 
             <a href='{{ url_for("shared_solve", solve_id = solve.id) }}'
-                class='mt-2 italic text-md text-sky-500 font-bold underline'>Share this solve</p>
+                class='mt-2 italic text-md text-sky-500 font-bold underline'>Share this solve</a>
 
 
-                <scramble-display class='mt-4' scramble="{{ solve.scramble }}"></scramble-display>
+            <scramble-display class='mt-4' scramble="{{ solve.scramble }}"></scramble-display>
         </div>
 
 
