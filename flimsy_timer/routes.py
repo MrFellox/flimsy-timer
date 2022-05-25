@@ -113,6 +113,11 @@ def solves():
 
     return render_template('solves.html', solves = solves)
 
+#* Law
+
+@app.route('/privacy')
+def privacy():
+    return render_template('policy.html')
 
 #* Database
 
