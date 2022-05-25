@@ -18,7 +18,9 @@
 </head>
 
 <body>
+    <!-- Navbar -->
 
+    {% if current_user.is_authenticated %}
     <nav class='shadow-md shadow-sky-500/50'>
         <div class='container w-screen h-1/6 flex justify-between bg-sky-500 shadow-md shadow-bg-sky-500/50 rounded-b'>
 
@@ -36,7 +38,7 @@
                     class='font-semibold text-slate-900 hover:bg-slate-900 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Account</a>
                 <a href=#
                     class='font-semibold text-slate-900 hover:bg-slate-900 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Solves</a>
-                <a href=#
+                <a href="{{ url_for('logout') }}"
                     class='font-semibold text-slate-900 hover:bg-red-500 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Log
                     Out</a>
 
@@ -44,6 +46,67 @@
             </div>
         </div>
     </nav>
+
+    {% else %}
+
+    <nav class='shadow-md shadow-sky-500/50'>
+        <div class='container w-screen h-1/6 flex justify-between bg-sky-500 shadow-md shadow-bg-sky-500/50 rounded-b'>
+
+            <div class='flex align-middle'>
+                <img src='{{ url_for("static", filename="flimsy_timer_big.png") }}'
+                    class='ml-2 mt-6 mb-8 h-8 subpixel-antialiased align-middle'>
+
+                <a href='{{ url_for("index") }} '
+                    class='hover:-translate-y-1 ease-in-out duration-100 transition-all ml-2 mt-6 text-2xl text-slate-900 justify-end font-extrabold subpixel-antialiased'>Flimsy
+                    Timer</a>
+            </div>
+
+            <div class='flex flex-row items-center gap-6 mr-4 justify-end content-between'>
+                <a href='{{ url_for("register") }}'
+                    class='font-semibold text-slate-900 hover:bg-slate-900 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Sign
+                    Up</a>
+                <a href='{{ url_for("login") }}'
+                    class='font-semibold text-slate-900 hover:bg-slate-900 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Log
+                    In</a>
+            </div>
+        </div>
+    </nav>
+
+    {% endif %}
+
+    <!-- Flashed messages -->
+
+    {% with messages = get_flashed_messages(with_categories = True) %}
+    {% if messages %}
+
+    {% for category, message in messages %}
+
+    {% if category == 'danger' %}
+    <div class="bg-red-300 text-center py-4 lg:px-4">
+        <div class="p-2 bg-red-500 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+            role="alert">
+            <span
+                class="flex rounded-full bg-yellow-300 text-slate-900 uppercase px-2 py-1 text-xs font-bold mr-3">!</span>
+            <span class="font-semibold mr-2 text-left flex-auto">{{message}}</span>
+            </svg>
+        </div>
+    </div>
+
+    {% elif category == 'info' %}
+    <div class="bg-sky-300 text-center py-4 lg:px-4">
+        <div class="p-2 bg-indigo-500 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+            role="alert">
+            <span class="flex rounded-full bg-sky-500 text-slate-900 italic px-2 py-1 text-xs font-bold mr-3">i</span>
+            <span class="font-semibold mr-2 text-left flex-auto">{{ message }}</span>
+            </svg>
+        </div>
+    </div>
+
+    {% endif %}
+
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
     {% block content %}
     {% endblock %}

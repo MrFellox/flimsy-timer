@@ -1,18 +1,19 @@
 from flask_login import UserMixin
 
 class User(UserMixin):
-    def __init__(self, id, username, password):
+    def __init__(self, id, email, username, password):
         self.id = id
+        self.email = email
         self.username = username
         self.password = password
 
 
     @staticmethod
     def from_dict(d):
-        return Users(d['id'], d['username'], d['password'])
+        return User(d['id'], d['email'], d['username'], d['password'])
 
     def to_dict(self):
-        return {'id': self.id, 'username': self.username, 'password': self.password}
+        return {'id': self.id, 'email': self.email, 'username': self.username, 'password': self.password}
 
     def __repr__(self):
-        return f'<Users {self.id} {self.username} {self.password}>'
+        return f'<Users {self.id} {self.email} {self.username} {self.password}>'

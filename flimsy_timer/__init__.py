@@ -9,6 +9,7 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = '034f136123854a44b3584c00773193e8'
 loginmanager = LoginManager()
 loginmanager.init_app(app)
 

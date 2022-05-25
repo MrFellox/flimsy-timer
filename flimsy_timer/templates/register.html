@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Flimsy Timer | Sign Up
+{% endblock %}
+
+{% block content %}
+<div class='flex justify-center items-center'>
+    <div class='mt-32 shadow-lg bg-white h-fit w-fit p-6 rounded'>
+        <form method='POST'>
+            {{ form.hidden_tag() }}
+
+            <h1 class='text-2xl text-neutral-900 font-extrabold'>Sign Up</h1>
+
+            <br>
+            {{ form.email(class = 'mt-1 text-neutral-900 form-input block w-full py-2 px-3 border border-gray-300
+            rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition
+            duration-150 ease-in-out', placeholder = 'E-Mail Address')}}
+
+            <br>
+
+            {{ form.username(class = 'mt-1 text-neutral-900 form-input block w-full py-2 px-3 border border-gray-300
+            rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition
+            duration-150 ease-in-out', placeholder = 'Username')}}
+
+            <br>
+
+            {{ form.password(class = 'mt-1 text-neutral-900 form-input block w-full py-2 px-3 border border-gray-300
+            rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition
+            duration-150 ease-in-out', placeholder = 'Password')}}
+
+            <br>
+
+            {{ form.confirm_password(class = 'mt-1 text-neutral-900 form-input block w-full py-2 px-3 border
+            border-gray-300
+            rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition
+            duration-150 ease-in-out', placeholder = 'Confirm Password')}}
+
+            <br>
+
+            {{ form.submit(class = 'mt-4 bg-sky-500 font-semibold text-md shadow-md shadow-sky-500/50 px-4 py-1 rounded
+            hover:bg-red-500 transition ease-in-out delay-75 duration-200 hover:-translate-y-2 hover:scale-105
+            hover:shadow-red-500/50')}}
+        </form>
+
+    </div>
+</div>
+{% endblock %}
