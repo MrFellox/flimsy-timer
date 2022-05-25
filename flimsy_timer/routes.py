@@ -79,7 +79,7 @@ def register():
             db.collection('users').document(user.id).set(user.to_dict())
             
             login_user(user)
-            flash('Succesfully registered!\nWelcome to Flimsy Time!', 'info')
+            flash('Succesfully registered! | Welcome to Flimsy Timer!', 'info')
             return redirect(url_for('index'))
 
     return render_template('register.html', form = form)
