@@ -5,6 +5,7 @@ let timerClock = 0;
 let startClock = 3;
 
 const userId = document.getElementById('userId').textContent;
+console.log(userId);
 
 console.log('timer.js file loaded.')
 
@@ -73,8 +74,10 @@ window.addEventListener('keyup', async function (e) {
         timer.style.color = 'white'
 
         // Hide timer buttons and scramble and nav
-        document.getElementById('buttonsWrapper').classList.add('hidden')
-        document.getElementById('scramble').classList.add('invisible')
+        this.document.getElementById('buttonsWrapper').classList.add('hidden')
+        this.document.getElementById('scramble').classList.add('invisible')
+        this.document.getElementById('nav').classList.toggle('invisible')
+        console.warn('hiddden')
 
         setTimeout(showTime, 10);
     }
@@ -91,6 +94,8 @@ window.addEventListener('keyup', async function (e) {
 
         // Show timerbuttons and nav
         document.getElementById('buttonsWrapper').classList.remove('hidden')
+        this.document.getElementById('nav').classList.toggle('invisible')
+
 
         // Request database to save solve
 
@@ -108,8 +113,12 @@ window.addEventListener('keyup', async function (e) {
             isDNF: false,
             isPlus2: false,
             date: now.toISOString(),
-            puzzle: '333'
+            puzzle: '333',
+            owner: userId
+
         }));
+
+        console.log('Solve sent to database.')
 
         // Update scramble and show it
 

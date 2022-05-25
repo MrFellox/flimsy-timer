@@ -18,10 +18,11 @@
 </head>
 
 <body>
+    <span id='userId' class="hidden">{{ current_user.id }}</span>
     <!-- Navbar -->
 
     {% if current_user.is_authenticated %}
-    <nav class='shadow-md shadow-sky-500/50'>
+    <nav id='nav' class='shadow-md shadow-sky-500/50'>
         <div class='container w-screen h-1/6 flex justify-between bg-sky-500 shadow-md shadow-bg-sky-500/50 rounded-b'>
 
             <div class='flex align-middle'>
@@ -36,7 +37,7 @@
             <div class='flex flex-row items-center gap-6 mr-4 justify-end content-between'>
                 <a href=#
                     class='font-semibold text-slate-900 hover:bg-slate-900 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Account</a>
-                <a href=#
+                <a href="{{ url_for('solves') }}"
                     class='font-semibold text-slate-900 hover:bg-slate-900 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Solves</a>
                 <a href="{{ url_for('logout') }}"
                     class='font-semibold text-slate-900 hover:bg-red-500 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Log

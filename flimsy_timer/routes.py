@@ -1,6 +1,6 @@
 from flimsy_timer import app, loginmanager, db
 from flimsy_timer.scrambles import gen333scramble
-from flimsy_timer.models import User
+from flimsy_timer.models import User, Solve
 from flimsy_timer.forms import LoginForm, RegisterForm
 from flask import render_template, flash, redirect, url_for, request, Response
 from flask_login import current_user, login_required, login_user, logout_user
@@ -24,10 +24,6 @@ def unathorized_callback():
 
 loginmanager.unauthorized_handler(unathorized_callback)
 
-@app.route('/')
-@login_required
-def index():
-    return render_template('index.html', scramble = gen333scramble())
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -94,7 +90,31 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-# Database
+
+#* Page routes
+
+@app.route('/')
+@login_required
+def index():
+    return render_template('index.html', scramble = gen333scramble())
+
+
+@app.route('/solves')
+@login_required
+def solves():
+    # Filter user solves
+
+    solves_docs = db.collection('solves').where('owner', '==', current_user.id).get()
+
+    solves = []
+
+    for solve_doc in solves_docs:
+        solves.append(Solve.from_dict(solve_doc.to_dict()))
+
+    return render_template('solves.html', solves = solves)
+
+
+#* Database
 
 @app.route('/api/save', methods=['POST'])
 def save_solve():
@@ -113,7 +133,9 @@ def save_solve():
             'is_dnf': data['isDNF'],
             'is_plus_2': data['isPlus2'],
             'date': date,
-            'puzzle': data['puzzle']
+            'puzzle': data['puzzle'],
+            'owner': data['owner'],
+            'id': doc_ref.get().id
         })
         
         return Response("", 200, mimetype='application/json')
@@ -121,17 +143,21 @@ def save_solve():
     except Exception as e:
         print(e)
         return Response(response = "", status = 500, mimetype='application/json') 
+
+@app.route('/shared/solve/<solve_id>')
+def shared_solve(solve_id):
+    solve_doc = db.collection('solves').document(solve_id).get()
+
+    if not solve_doc:
+        return Response(response = "", status = 404, mimetype='application/json')
+
+    solve = Solve.from_dict(solve_doc.to_dict())
+
+    owner = User.from_dict(db.collection('users').document(solve.owner).get().to_dict())
+    data = {'solve': solve, 'owner': owner}
+
+    return render_template('sharedSolve.html', solve = solve, owner = owner)
     
-    # db.collection('solves').document().set({
-    #     'user_id': user_id,
-    #     'duration': duration,
-    #     'scramble': scramble,
-    #     'puzzle': puzzle
-    # })
-
-    # print('saved')
-    # return 200
-
 @app.route('/api/gen333scramble')
 def generate333():
     return gen333scramble()

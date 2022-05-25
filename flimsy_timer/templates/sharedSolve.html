@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}
+Flimsy Timer | Solve by {{ owner.username }}
+{% endblock %}
+
+{% block head %}
+<script src="https://cdn.cubing.net/js/scramble-display" type="module"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container content-center mt-8 ml-4">
+
+    <div class='w-4/5 h-fit bg-white drop-shadow-md rounded'>
+        <div class='items-center p-4'>
+            <h1 class='text-3xl subpixel-antialiased text-neutral-900'>Solve by <strong>{{ owner.username.upper()
+                    }}</strong></h1>
+            <h1 class='text-3xl mt-4 font-extrabold subpixel-antialiased text-neutral-900'>{{ solve.solve_time }}</h1>
+            <p class='mt-1 italic text-md text-neutral-900'>Category: {{ solve.puzzle }}</p>
+            <p class='mt-1 font-mono font-bold text-md text-neutral-900'>{{ solve.scramble }}</p>
+
+            <scramble-display class='mt-4' scramble="{{ solve.scramble }}"></scramble-display>
+        </div>
+    </div>
+</div>
+{% endblock %}
