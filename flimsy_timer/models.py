@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+import arrow
 
 class User(UserMixin):
     def __init__(self, id, email, username, password):
@@ -26,7 +27,7 @@ class Solve:
         self.puzzle = puzzle
         self.is_plus_2 = is_plus_2
         self.is_dnf = is_dnf
-        self.date = date
+        self.date = arrow.get(date)
         self.owner = owner
         self.id = id
 

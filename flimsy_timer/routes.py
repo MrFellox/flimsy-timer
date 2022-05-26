@@ -5,6 +5,7 @@ from flimsy_timer.forms import LoginForm, RegisterForm
 from flask import render_template, flash, redirect, url_for, request, Response
 from flask_login import current_user, login_required, login_user, logout_user
 from dateutil import parser
+import arrow
 import datetime
 import flask_bcrypt
 
@@ -146,7 +147,7 @@ def save_solve():
             'scramble': data['scramble'],
             'is_dnf': data['isDNF'],
             'is_plus_2': data['isPlus2'],
-            'date': date,
+            'date': arrow.utcnow().format('YYYY-MM-DD HH:mm:ss'),
             'puzzle': data['puzzle'],
             'owner': data['owner'],
             'id': doc_ref.get().id

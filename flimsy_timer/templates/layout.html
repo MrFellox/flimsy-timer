@@ -17,7 +17,7 @@
     <link rel='stylesheet' href='{{ url_for("static", filename="css/main.css") }}'>
 </head>
 
-<body>
+<body class='overflow-hidden'>
     <span id='userId' class="hidden">{{ current_user.id }}</span>
     <!-- Navbar -->
 
@@ -34,7 +34,7 @@
                     Timer</a>
             </div>
 
-            <div class='flex flex-row items-center gap-6 mr-4 justify-end content-between'>
+            <div class='flex flex-row items-center gap-6 mr- justify-end content-between'>
                 <a href=#
                     class='font-semibold text-slate-900 hover:bg-slate-900 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Account</a>
                 <a href="{{ url_for('solves') }}"
