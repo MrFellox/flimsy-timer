@@ -115,21 +115,13 @@ def solves(solve_id: None):
 
     return render_template('solves.html', solves = solves)
 
-# This route returns the solves of the user, this is made like this to improve loading times of the /solves route
-@app.route('/api/getSolveData/<owner_id>')
-def get_solve_data(owner_id):
-
-    solves = get_user_solves(owner_id)
-
-    return render_template('solvesOutput.html', solves = solves)
-
 #* Law
 
 @app.route('/privacy')
 def privacy():
     return render_template('policy.html')
 
-#* Database
+#* Database and solves management
 
 @app.route('/api/save', methods=['POST'])
 def save_solve():
@@ -138,7 +130,6 @@ def save_solve():
         
         doc_ref = db.collection('solves').document()
 
-        # Parse JS ISO string to datetime.datetime        
         doc_ref.set({
             'solve_time': data['solveTime'],
             'scramble': data['scramble'],
@@ -155,6 +146,16 @@ def save_solve():
     except Exception as e:
         print(e)
         return Response(response = "", status = 500, mimetype='application/json') 
+
+# This route returns the solves of the user, this is made like this 
+# to improve loading times of the /solves route
+@app.route('/api/getSolveData/<owner_id>')
+def get_solve_data(owner_id):
+
+    solves = get_user_solves(owner_id)
+
+    return render_template('solvesOutput.html', solves = solves)
+
 
 @app.route('/shared/solve/<solve_id>')
 def shared_solve(solve_id):
@@ -199,3 +200,17 @@ def set_plus_two(user_id):
 @app.route('/api/gen333scramble')
 def generate333():
     return gen333scramble()
+
+#* Management routes
+
+@app.route('/null')
+def nullate():
+    # Delete all solves from flimsy admin
+
+    solves = db.collection('solves').where('owner', '==', '9c2RP2A60ot0SU6e2RYM').get()
+
+    for solve in solves:
+        solve = Solve.from_dict(solve.to_dict())
+        db.collection('solves').document(solve.id).delete()
+
+    return redirect(url_for('solves'))
