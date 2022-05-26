@@ -9,7 +9,6 @@ Flimsy Timer
 <script class='invisible hidden' src='{{ url_for("static", filename="js/timer.js") }}' defer></script>
 {% endblock %}
 
-
 {% block content %}
 <p id='scramble' class='mt-8 text-white font-bold text-xl font-mono text-center'>{{ scramble }}</p>
 
@@ -20,12 +19,30 @@ Flimsy Timer
 </div>
 
 <div id='buttonsWrapper' class='mt-4 text-center hidden'>
-    <button id=plusTwo
+    <button onclick='setPlusTwo()' id=plusTwo
         class="w-16 bg-neutral-900 hover:bg-neutral-700 rounded-md text-center align-middle text-white transition-all duration-200 mx-2 font-mono text-sm font-semibold"
         title="Sets solve as +2">+2</button>
 
-    <button id=dnf
+    <button onclick='setDNF()' id=dnf
         class="w-16 bg-neutral-900 hover:bg-neutral-700 rounded-md text-center align-middle text-white transition-all duration-200 mx-2 font-mono text-sm font-semibold"
         title='Sets solve as DNF'>DNF</button>
 </div>
+
+<script defer>
+
+    function setDNF() {
+
+        const xhttp = new XMLHttpRequest();
+
+        // Make a request to set the time to DNF
+        xhttp.open('POST', `/api/setDNF/${userId}`, true); xhttp.send();
+    }
+
+    function setPlusTwo() {
+        const xhttp = new XMLHttpRequest();
+
+        // Make a request to set the time to +2 
+        xhttp.open('POST', `/api/setPlusTwo/${userId}`, true); xhttp.send();
+    } 
+</script>
 {% endblock %}

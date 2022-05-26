@@ -36,7 +36,11 @@ class Solve:
         return Solve(source['solve_time'], source['scramble'], source['puzzle'], source['is_plus_2'], source['is_dnf'], source['date'], source['owner'], source['id'])
 
     def to_dict(self):
-        return {'solve_time': self.solve_time, 'scramble': self.scramble, 'puzzle': self.puzzle, 'is_plus_2': self.is_plus_2, 'is_dnf': self.is_dnf, 'date': self.date, 'owner': self.owner, "id": self.id}
+
+        output_date = self.date.format('YYYY-MM-DD HH:mm:ss')
+        return {'solve_time': self.solve_time, 'scramble': self.scramble, 'puzzle': self.puzzle, 'is_plus_2': self.is_plus_2, 'is_dnf': self.is_dnf, 'date': output_date, 'owner': self.owner, "id": self.id}
 
     def __repr__(self):
-        return f'<Solve {self.solve_time} {self.scramble} {self.puzzle} {self.is_plus_2} {self.is_dnf} {self.date} {self.owner} {self.id}>'
+        output_date = self.date.format('YYYY-MM-DD HH:mm:ss')
+
+        return f'<Solve {self.solve_time} {self.scramble} {self.puzzle} {self.is_plus_2} {self.is_dnf} {output_date} {self.owner} {self.id}>'

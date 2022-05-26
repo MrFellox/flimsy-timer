@@ -70,7 +70,7 @@ window.addEventListener('keyup', async function (e) {
         timer.style.color = 'white'
 
         // Hide timer buttons and scramble and nav
-        this.document.getElementById('buttonsWrapper').classList.toggle('hidden')
+        this.document.getElementById('buttonsWrapper').classList.add('hidden')
         this.document.getElementById('scramble').classList.toggle('invisible')
         this.document.getElementById('nav').classList.toggle('invisible')
         console.warn('hiddden')
@@ -89,7 +89,7 @@ window.addEventListener('keyup', async function (e) {
 
 
         // Show timerbuttons and nav
-        document.getElementById('buttonsWrapper').classList.toggle('hidden')
+        document.getElementById('buttonsWrapper').classList.remove('hidden')
         this.document.getElementById('nav').classList.toggle('invisible')
 
 

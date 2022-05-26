@@ -12,6 +12,18 @@
             3x3</p>
         {% endif %}
 
+        {% if solve.is_dnf == True %}
+        <p
+            class='select-none my-2 mt-1 font-mono font-bold w-fit h-fit text-md text-black bg-red-500 px-3 rounded-full'>
+            DNF</p>
+        {% endif %}
+
+        {% if solve.is_plus_2 == True %}
+        <p
+            class='select-none my-2 mt-1 font-mono font-bold w-fit h-fit text-md text-black bg-yellow-500 px-3 rounded-full'>
+            DNF</p>
+        {% endif %}
+
         <p class='break-normal flex-nowrap mt-1 font-mono font-bold text-md text-neutral-900'>{{solve.scramble }}
         </p>
 

@@ -169,6 +169,32 @@ def shared_solve(solve_id):
     data = {'solve': solve, 'owner': owner}
 
     return render_template('sharedSolve.html', solve = solve, owner = owner)
+
+@app.route('/api/setDNF/<user_id>', methods = ['POST'])
+def set_dnf(user_id):
+    # Sets the last solve as DNF
+
+    solves = get_user_solves(user_id)
+
+    current_solve = solves[0]
+    current_solve.is_dnf = True
+
+    db.collection('solves').document(current_solve.id).set(current_solve.to_dict())
+
+    return Response("", 200, mimetype='application/json')
+
+@app.route('/api/setPlusTwo/<user_id>', methods = ['POST'])
+def set_plus_two(user_id):
+    # Sets the last solve as DNF
+
+    solves = get_user_solves(user_id)
+
+    current_solve = solves[0]
+    current_solve.is_plus_2 = True
+
+    db.collection('solves').document(current_solve.id).set(current_solve.to_dict())
+
+    return Response("", 200, mimetype='application/json')
     
 @app.route('/api/gen333scramble')
 def generate333():
