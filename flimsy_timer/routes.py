@@ -138,10 +138,7 @@ def save_solve():
         
         doc_ref = db.collection('solves').document()
 
-        # Parse JS ISO string to datetime.datetime
-
-        date = parser.parse(data['date'])
-        
+        # Parse JS ISO string to datetime.datetime        
         doc_ref.set({
             'solve_time': data['solveTime'],
             'scramble': data['scramble'],

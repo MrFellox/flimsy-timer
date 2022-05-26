@@ -22,4 +22,9 @@ def get_user_solves(owner_id: str) -> List[Solve]:
     for solve_doc in solves_docs:
         solves.append(Solve.from_dict(solve_doc.to_dict()))
 
+
+    # Sort solves from most recent to oldest
+
+    solves.sort(key = lambda solve: solve.date, reverse = True)
+
     return solves

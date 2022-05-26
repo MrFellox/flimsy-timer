@@ -5,15 +5,11 @@ let timerClock = 0;
 let startClock = 3;
 
 const userId = document.getElementById('userId').textContent;
-console.log(userId);
 
 console.log('timer.js file loaded.')
 
 // Check local storage
 
-if (localStorage.getItem('data') == null) {
-    localStorage.setItem('data', '{"solves": []}');
-}
 
 // Updates the elapsed time
 function showTime() {
@@ -54,7 +50,7 @@ window.addEventListener('keypress', (e) => {
         timer.style.color = 'green'
     }
 
-
+    // Add time to be able to start timer
     else if (e.code == 'Space' && timerActive == false) {
         timerClock++;
     }
@@ -74,8 +70,8 @@ window.addEventListener('keyup', async function (e) {
         timer.style.color = 'white'
 
         // Hide timer buttons and scramble and nav
-        this.document.getElementById('buttonsWrapper').classList.add('hidden')
-        this.document.getElementById('scramble').classList.add('invisible')
+        this.document.getElementById('buttonsWrapper').classList.toggle('hidden')
+        this.document.getElementById('scramble').classList.toggle('invisible')
         this.document.getElementById('nav').classList.toggle('invisible')
         console.warn('hiddden')
 
@@ -93,7 +89,7 @@ window.addEventListener('keyup', async function (e) {
 
 
         // Show timerbuttons and nav
-        document.getElementById('buttonsWrapper').classList.remove('hidden')
+        document.getElementById('buttonsWrapper').classList.toggle('hidden')
         this.document.getElementById('nav').classList.toggle('invisible')
 
 
@@ -103,7 +99,6 @@ window.addEventListener('keyup', async function (e) {
         let now = new Date()
         let scrambleToSave = document.getElementById('scramble').textContent;
 
-        // xhttp.open('POST', `/save/${userId}/${timer.textContent}/${scrambleToSave}/333`, true);
         xhttp.open('POST', `/api/save`, true);
 
         xhttp.setRequestHeader('Content-Type', 'application/json');
@@ -112,7 +107,6 @@ window.addEventListener('keyup', async function (e) {
             scramble: scrambleToSave,
             isDNF: false,
             isPlus2: false,
-            date: now.toISOString(),
             puzzle: '333',
             owner: userId
 
