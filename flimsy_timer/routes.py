@@ -99,9 +99,15 @@ def index():
     return render_template('index.html', scramble = gen333scramble())
 
 
-@app.route('/solves')
+@app.route('/solves/<solve_id>')
+@app.route('/solves', defaults = {'solve_id': None})
 @login_required
-def solves():
+def solves(solve_id: None):
+
+    if solve_id != None:
+        return render_template('solveData.html')
+
+
     # Filter user solves
 
     solves_docs = db.collection('solves').where('owner', '==', current_user.id).get()
