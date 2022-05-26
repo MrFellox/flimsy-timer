@@ -3,7 +3,6 @@
 
     <div class='items-center content-center w-fit h-max p-2 bg-white rounded shadow'>
 
-        <!-- <div class='w-4/5 h-fit items-center p-2 '> -->
         <h1 class='text-3xl font-extrabold subpixel-antialiased text-neutral-900'>{{ solve.solve_time }}</h1>
         <p class='text-sm italic subpixel-antialiased text-gray-700'>{{ solve.date.humanize() }}</p>
 
@@ -23,7 +22,6 @@
 
 
         <scramble-display class='mt-6' scramble="{{ solve.scramble }}"></scramble-display>
-        <!-- </div> -->
 
     </div>
     {% endfor %}
