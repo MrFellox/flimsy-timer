@@ -8,6 +8,8 @@ from dateutil import parser
 import datetime
 import flask_bcrypt
 
+from flimsy_timer.utils import get_user_solves
+
 @loginmanager.user_loader
 def load_user(user_id):
     # Get the user from id
@@ -108,16 +110,17 @@ def solves(solve_id: None):
         return render_template('solveData.html')
 
 
-    # Filter user solves
-
-    solves_docs = db.collection('solves').where('owner', '==', current_user.id).get()
-
-    solves = []
-
-    for solve_doc in solves_docs:
-        solves.append(Solve.from_dict(solve_doc.to_dict()))
+    solves = get_user_solves(current_user.id)
 
     return render_template('solves.html', solves = solves)
+
+# This route returns the solves of the user, this is made like this to improve loading times of the /solves route
+@app.route('/api/getSolveData/<owner_id>')
+def get_solve_data(owner_id):
+
+    solves = get_user_solves(owner_id)
+
+    return render_template('solvesOutput.html', solves = solves)
 
 #* Law
 

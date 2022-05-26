@@ -4,39 +4,29 @@ Flimsy Timer | Solves
 {% endblock %}
 
 {% block head %}
-<script src="https://cdn.cubing.net/js/scramble-display" type="module"></script>
+<script src='{{url_for("static", filename= "js/loadSolves.js")}}' defer></script>
 {% endblock %}
 
-
 {% block content %}
-
-<div class="container flex flex-col items-center w-screen content-center gap-4 justify-betweeen mt-8 ml-4">
-    {% for solve in solves %}
-
-    <a href="{{ url_for('solves', solve_id=solve.id) }}">
+<div id='wrapper'>
+    <div class="container flex flex-col items-center w-screen content-center gap-4 justify-betweeen mt-8 ml-4">
         <div class='break-normal flex hover:cursor-pointer content-center w-fit h-max bg-white rounded shadow'>
 
             <div class='w-4/5 h-fit items-center p-2 '>
-                <h1 class='text-3xl font-extrabold subpixel-antialiased text-neutral-900'>{{ solve.solve_time }}</h1>
+                <h1 class='animate-pulse blur text-3xl font-extrabold subpixel-antialiased text-neutral-900'>00.00</h1>
 
-                {% if solve.puzzle == '333' %}
-                <p class='mt-1 font-mono font-bold w-fit h-fit text-md text-white bg-neutral-900 px-3 rounded-full'>3x3
-                </p>
-                {% endif %}
-                <p class='break-normal flex-nowrap mt-1 font-mono font-bold text-md text-neutral-900'>{{
-                    solve.scramble }}
-                </p>
+                <div
+                    class='blur animate-pulse mt-1 font-mono font-bold w-fit h-fit text-md text-white bg-neutral-900 px-3 rounded-full'>
+                    3x3
+                </div>
 
+                <div
+                    class='break-normal w-80 h-8 animate-pulse blur flex-nowrap mt-1 font-mono font-bold text-md bg-neutral-900'>
+                </div>
 
-                <a href='{{ url_for("shared_solve", solve_id = solve.id) }}'
-                    class='mt-2 italic text-md text-sky-500 font-bold underline'>Share this solve</a>
-
-
-                <!-- <scramble-display class='mt-4' scramble="{{ solve.scramble }}"></scramble-display> -->
             </div>
 
         </div>
-        {% endfor %}
-    </a>
+    </div>
 </div>
 {% endblock %}
