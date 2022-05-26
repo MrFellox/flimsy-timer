@@ -22,8 +22,8 @@
     <!-- Navbar -->
 
     {% if current_user.is_authenticated %}
-    <nav id='nav' class='shadow-md shadow-sky-500/50'>
-        <div class='container w-screen h-1/6 flex justify-between bg-sky-500 shadow-md shadow-bg-sky-500/50 rounded-b'>
+    <nav id='nav' class='grow shadow-md shadow-sky-500/50 w-screen'>
+        <div class='grow w-screen h-1/6 flex justify-between bg-sky-500 shadow-md shadow-bg-sky-500/50 rounded-b'>
 
             <div class='flex align-middle'>
                 <img src='{{ url_for("static", filename="flimsy_timer_big.png") }}'
@@ -50,8 +50,8 @@
 
     {% else %}
 
-    <nav class='shadow-md shadow-sky-500/50'>
-        <div class='container w-screen h-1/6 flex justify-between bg-sky-500 shadow-md shadow-bg-sky-500/50 rounded-b'>
+    <nav class='grow shadow-md shadow-sky-500/50 w-screen'>
+        <div class='grow w-screen h-1/6 flex justify-between bg-sky-500 shadow-md shadow-bg-sky-500/50 rounded-b'>
 
             <div class='flex align-middle'>
                 <img src='{{ url_for("static", filename="flimsy_timer_big.png") }}'
