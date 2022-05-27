@@ -5,3 +5,13 @@
 body {
     background-color: #171717;
 }
+
+@layer components {
+    .nav-link {
+        @apply grow font-semibold text-slate-900 hover:bg-slate-900 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150
+    }
+
+    .nav-logout {
+        @apply grow font-semibold text-slate-900 hover:bg-red-500 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150
+    }
+}

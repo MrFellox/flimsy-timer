@@ -22,8 +22,8 @@
     <!-- Navbar -->
 
     {% if current_user.is_authenticated %}
-    <nav id='nav' class='grow shadow-md shadow-sky-500/50 w-screen'>
-        <div class='grow w-screen h-1/6 flex justify-between bg-sky-500 shadow-md shadow-bg-sky-500/50 rounded-b'>
+    <nav id='nav' class='fixed left-0 top-0 grow shadow-md rounded bg-sky-500 shadow-sky-500/50 w-fit px-2 h-screen'>
+        <div class='grow flex flex-col justify-between'>
 
             <div class='flex align-middle'>
                 <img src='{{ url_for("static", filename="flimsy_timer_big.png") }}'
@@ -34,13 +34,12 @@
                     Timer</a>
             </div>
 
-            <div class='flex flex-row items-center gap-6 mr- justify-end content-between'>
-                <a href=#
-                    class='font-semibold text-slate-900 hover:bg-slate-900 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Account</a>
-                <a href="{{ url_for('solves') }}"
-                    class='font-semibold text-slate-900 hover:bg-slate-900 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Solves</a>
-                <a href="{{ url_for('logout') }}"
-                    class='font-semibold text-slate-900 hover:bg-red-500 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150'>Log
+            <div class='flex flex-col items-center gap-6 justify-end content-between'>
+                <a href="{{ url_for('solves') }}" class='nav-link'>Solves</a>
+                <a href=# class='cursor-not-allowed nav-link'>Stats</a>
+                <a href=# class='cursor-not-allowed nav-link'>Settings</a>
+                <a href=# class='cursor-not-allowed nav-link'>Account</a>
+                <a href="{{ url_for('logout') }}" class='nav-logout'>Log
                     Out</a>
 
 
