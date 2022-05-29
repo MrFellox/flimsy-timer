@@ -38,6 +38,11 @@
                 <button class=' mt-4 text-md shadow-lg shadow-neutral-900/50 bg-neutral-900 text-white font-bold w-fit h-fit px-2 py-1 rounded-full
                 hover:-translate-y-1 transition-all ease-in-out delay-75 duration-100'>Edit</button>
             </a>
+
+            <a href='{{ url_for("delete_solve", solve_id = solve.id) }}'>
+                <button class=' mt-4 text-md shadow-lg shadow-red-500/50 bg-red-500 text-black font-bold w-fit h-fit px-2 py-1 rounded-full
+                hover:-translate-y-1 transition-all ease-in-out delay-75 duration-100'>Delete</button>
+            </a>
         </div>
 
 

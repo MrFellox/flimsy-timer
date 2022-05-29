@@ -115,12 +115,6 @@ def solves(solve_id: None):
 
     return render_template('solves.html', solves = solves)
 
-#* Law
-
-@app.route('/privacy')
-def privacy():
-    return render_template('policy.html')
-
 #* Database and solves management
 
 @app.route('/api/save', methods=['POST'])
@@ -149,7 +143,36 @@ def save_solve():
 
 @app.route('/edit_solve/<solve_id>')
 def edit_solve(solve_id):
-    return "Edit solve"
+
+    try:
+        # Check if user is owner of solve
+        solve = Solve.from_dict(db.collection('solves').where('id', '==', solve_id).get()[0].to_dict())
+
+        if solve.owner == current_user.id:
+            return 'can edit'
+        
+        flash('You are not the owner of that solve!', 'danger')
+        return redirect(url_for('solves')) 
+
+    except Exception as e:
+        flash('An unknown error occured', 'danger')
+        return redirect(url_for('solves'))
+
+@app.route('/delete_solve/<solve_id>')
+def delete_solve(solve_id):
+    try:
+        # Check if user is owner of solve
+        solve = Solve.from_dict(db.collection('solves').where('id', '==', solve_id).get()[0].to_dict())
+
+        if solve.owner == current_user.id:
+            return 'can delete'
+        
+        flash('You are not the owner of that solve!', 'danger')
+        return redirect(url_for('solves')) 
+
+    except Exception as e:
+        flash('An unknown error occured', 'danger')
+        return redirect(url_for('solves'))
 
 # This route returns the solves of the user, this is made like this 
 # to improve loading times of the /solves route
