@@ -14,4 +14,8 @@ body {
     .nav-logout {
         @apply grow font-semibold text-slate-900 hover:bg-red-500 hover:rounded-full hover:p-1.5 hover:text-white transition-all ease-in-out delay-75 duration-150
     }
+
+    .nav-disabled {
+        @apply grow text-slate-700 
+    }
 }
