@@ -49,6 +49,10 @@ def login():
 
             return redirect(url_for('index'))
 
+        else:
+            flash('Incorrect password', 'danger')
+            return redirect(url_for('login'))
+
     return render_template('login.html', form = form)
 
 @app.route('/register', methods = ['GET', 'POST'])
@@ -65,6 +69,9 @@ def register():
         
         if user_doc:
             flash('Username is already registered', 'danger')
+
+        elif ' ' in form.username.data:
+            flash('Username cannot contain spaces', 'danger')
             
         else:
             # hash password
