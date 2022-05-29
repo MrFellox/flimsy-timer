@@ -147,6 +147,10 @@ def save_solve():
         print(e)
         return Response(response = "", status = 500, mimetype='application/json') 
 
+@app.route('/edit_solve/<solve_id>')
+def edit_solve(solve_id):
+    return "Edit solve"
+
 # This route returns the solves of the user, this is made like this 
 # to improve loading times of the /solves route
 @app.route('/api/getSolveData/<owner_id>')

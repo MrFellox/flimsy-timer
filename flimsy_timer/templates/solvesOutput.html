@@ -27,10 +27,18 @@
         <p class='break-normal flex-nowrap mt-1 font-mono font-bold text-md text-neutral-900'>{{solve.scramble }}
         </p>
 
-        <a href='{{ url_for("shared_solve", solve_id = solve.id) }}'>
-            <button class=' mt-4 text-md shadow-lg shadow-indigo-600/50 bg-indigo-600 text-white font-bold w-fit h-fit px-2 py-1 rounded-full
+        <div class='flex flex-row gap-2'>
+
+            <a href='{{ url_for("shared_solve", solve_id = solve.id) }}'>
+                <button class=' mt-4 text-md shadow-lg shadow-indigo-600/50 bg-indigo-600 text-white font-bold w-fit h-fit px-2 py-1 rounded-full
                 hover:-translate-y-1 transition-all ease-in-out delay-75 duration-100'>Share</button>
-        </a>
+            </a>
+
+            <a href='{{ url_for("edit_solve", solve_id = solve.id) }}'>
+                <button class=' mt-4 text-md shadow-lg shadow-neutral-900/50 bg-neutral-900 text-white font-bold w-fit h-fit px-2 py-1 rounded-full
+                hover:-translate-y-1 transition-all ease-in-out delay-75 duration-100'>Edit</button>
+            </a>
+        </div>
 
 
         <scramble-display class='mt-6' scramble="{{ solve.scramble }}"></scramble-display>
