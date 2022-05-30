@@ -10,39 +10,63 @@ Flimsy Timer
 {% endblock %}
 
 {% block content %}
-<p id='scramble' class='mt-8 text-white font-bold text-xl font-mono text-center'>{{ scramble }}</p>
+
+<br>
+<br>
+<br>
+<br>
+
+<p id='scramble' class='ml-28 mt-8 text-white font-bold text-xl font-mono text-center'>{{ scramble }}</p>
 
 
-<div class='mt-8 text-white'>
-    <h1 id='timer' class='mt-8 text-9xl text-center subpixel-antialiased font-extrabold'>0.00
+<div class='text-white'>
+    <h1 id='timer' class='ml-28 mt-8 text-9xl text-center subpixel-antialiased font-extrabold'>0.00
     </h1>
 </div>
 
-<div id='buttonsWrapper' class='mt-4 text-center hidden'>
-    <button onclick='setPlusTwo()' id=plusTwo
+<div id='buttonsWrapper' class='mt-4 ml-28 text-center hidden'>
+    <button onclick='setPlusTwo(this)' id=plusTwo
         class="w-16 bg-neutral-900 hover:bg-neutral-700 rounded-md text-center align-middle text-white transition-all duration-200 mx-2 font-mono text-sm font-semibold"
         title="Sets solve as +2">+2</button>
 
-    <button onclick='setDNF()' id=dnf
+    <button onclick='setDNF(this)' id=dnf
         class="w-16 bg-neutral-900 hover:bg-neutral-700 rounded-md text-center align-middle text-white transition-all duration-200 mx-2 font-mono text-sm font-semibold"
         title='Sets solve as DNF'>DNF</button>
 </div>
 
-<script defer>
+<script>
 
-    function setDNF() {
+    function resetColor(btn) {
+        btn.classList.remove('bg-emerald-400')
+        btn.classList.add('bg-neutral-900')
+    }
+
+
+    function setDNF(e) {
 
         const xhttp = new XMLHttpRequest();
 
         // Make a request to set the time to DNF
         xhttp.open('POST', `/api/setDNF/${userId}`, true); xhttp.send();
+
+        e.classList.remove('bg-neutral-900')
+        e.classList.add('bg-emerald-400')
+
+
+        setTimeout(resetColor, 2000, e)
     }
 
-    function setPlusTwo() {
+    function setPlusTwo(e) {
         const xhttp = new XMLHttpRequest();
 
         // Make a request to set the time to +2 
         xhttp.open('POST', `/api/setPlusTwo/${userId}`, true); xhttp.send();
+
+        e.classList.remove('bg-neutral-900')
+        e.classList.add('bg-emerald-400')
+
+
+        setTimeout(resetColor, 2000, e)
     } 
 </script>
 {% endblock %}

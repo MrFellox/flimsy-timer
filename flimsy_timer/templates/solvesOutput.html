@@ -21,16 +21,34 @@
         {% if solve.is_plus_2 == True %}
         <p
             class='select-none my-2 mt-1 font-mono font-bold w-fit h-fit text-md text-black bg-yellow-500 px-3 rounded-full'>
-            DNF</p>
+            +2</p>
         {% endif %}
 
         <p class='break-normal flex-nowrap mt-1 font-mono font-bold text-md text-neutral-900'>{{solve.scramble }}
         </p>
 
-        <a href='{{ url_for("shared_solve", solve_id = solve.id) }}'>
-            <button class=' mt-4 text-md shadow-lg shadow-indigo-600/50 bg-indigo-600 text-white font-bold w-fit h-fit px-2 py-1 rounded-full
+        {% if solve.comment != '' %}
+        <h3 class='text-xl font-semibold mt-4 subpixel-antialiased text-neutral-800'>Comments</h3>
+        <p class='my-2 italic font-light'>{{ solve.comment }}</p>
+        {% endif %}
+
+        <div class='flex flex-row gap-2'>
+
+            <a href='{{ url_for("shared_solve", solve_id = solve.id) }}'>
+                <button class=' mt-4 text-md shadow-lg shadow-indigo-600/50 bg-indigo-600 text-white font-bold w-fit h-fit px-2 py-1 rounded-full
                 hover:-translate-y-1 transition-all ease-in-out delay-75 duration-100'>Share</button>
-        </a>
+            </a>
+
+            <a href='{{ url_for("edit_solve", solve_id = solve.id) }}'>
+                <button class=' mt-4 text-md shadow-lg shadow-neutral-900/50 bg-neutral-900 text-white font-bold w-fit h-fit px-2 py-1 rounded-full
+                hover:-translate-y-1 transition-all ease-in-out delay-75 duration-100'>Edit</button>
+            </a>
+
+            <a href='{{ url_for("delete_solve", solve_id = solve.id) }}'>
+                <button class=' mt-4 text-md shadow-lg shadow-red-500/50 bg-red-500 text-black font-bold w-fit h-fit px-2 py-1 rounded-full
+                hover:-translate-y-1 transition-all ease-in-out delay-75 duration-100'>Delete</button>
+            </a>
+        </div>
 
 
         <scramble-display class='mt-6' scramble="{{ solve.scramble }}"></scramble-display>

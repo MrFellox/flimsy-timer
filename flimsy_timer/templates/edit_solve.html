@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block title %}
+Flimsy Timer | Edit Solve
+{% endblock %}
+
+{% block head %}
+<script src="https://cdn.cubing.net/js/scramble-display" type="module"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container overflow-hidden flex flex-col items-center w-screen content-center gap-4 justify-betweeen mt-8">
+    <div class='items-center content-center w-fit h-max p-2 bg-white rounded shadow'>
+
+        <form method='POST'>
+            {{ form.hidden_tag() }}
+
+            <!-- Input for solve time-->
+            {{ form.solve_time(class = 'text-3xl border bg-neutral-300/50 font-extrabold subpixel-antialiased
+            text-neutral-900', placeholder = solve.solve_time, value = solve.solve_time) }}
+
+            <!-- date -->
+            <p class='text-sm italic subpixel-antialiased text-gray-700'>{{ solve.date.humanize() }}</p>
+
+
+            {% if solve.puzzle == '333' %}
+            <p
+                class='select-none my-2 font-mono font-bold w-fit h-fit text-md text-white bg-neutral-900 px-3 rounded-full'>
+                3x3</p>
+            {% endif %}
+
+            <!-- Penalties -->
+            <div class='flex flex-row gap-2'>
+
+                {{ form.penalties(class = 'font-bold')}}
+            </div>
+
+
+            <!-- Scramble -->
+            <div class="flex flex-row">
+                <input name='scramble' id='scramble' class='w-auto text-center flex-grow overflow-x-auto mt-1 font-mono font-bold text-md
+                text-neutral-900 border rounded bg-gray-400/50' value="{{ solve.scramble }}" placeholder="{{
+                    solve.scramble }}" required>
+                <!-- {{ form.scramble(class = '', placeholder = solve.scramble)
+                }} -->
+            </div>
+            <!-- Comment -->
+            <div class="flex flex-row">
+                {{ form.comment(class = 'w-auto text-center flex-grow overflow-x-auto mt-1 text-md
+                text-neutral-900 border rounded bg-gray-400/50', value = solve.comment, placeholder = 'Comment')}}
+            </div>
+
+            <!-- <p class='break-normal flex-nowrap mt-1 font-mono font-bold text-md text-neutral-900'>{{solve.scramble }}
+            </p> -->
+
+
+            <scramble-display class='mt-6' scramble="{{ solve.scramble }}"></scramble-display>
+
+            <button type='submit'
+                class='w-fit h-fit bg-sky-500 text-black font-bold text-center p-2 hover:-translate-y-1 hover:bg-sky-600 shadow-md shadow-sky-500/50 rounded ease-in-out transition-all duration-200 hover:shadow-sky-600'>Save</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,15 +1,14 @@
 from flimsy_timer import app, loginmanager, db
 from flimsy_timer.scrambles import gen333scramble
 from flimsy_timer.models import User, Solve
-from flimsy_timer.forms import LoginForm, RegisterForm
+from flimsy_timer.forms import EditSolve, LoginForm, RegisterForm
 from flask import render_template, flash, redirect, url_for, request, Response
 from flask_login import current_user, login_required, login_user, logout_user
-from dateutil import parser
+import traceback
 import arrow
-import datetime
 import flask_bcrypt
 
-from flimsy_timer.utils import get_user_solves
+from flimsy_timer.utils import get_user_solves, is_owner
 
 @loginmanager.user_loader
 def load_user(user_id):
@@ -49,6 +48,10 @@ def login():
 
             return redirect(url_for('index'))
 
+        else:
+            flash('Incorrect password', 'danger')
+            return redirect(url_for('login'))
+
     return render_template('login.html', form = form)
 
 @app.route('/register', methods = ['GET', 'POST'])
@@ -65,6 +68,9 @@ def register():
         
         if user_doc:
             flash('Username is already registered', 'danger')
+
+        elif ' ' in form.username.data:
+            flash('Username cannot contain spaces', 'danger')
             
         else:
             # hash password
@@ -115,11 +121,63 @@ def solves(solve_id: None):
 
     return render_template('solves.html', solves = solves)
 
-#* Law
+@app.route('/shared/solve/<solve_id>')
+def shared_solve(solve_id):
+    solve_doc = db.collection('solves').document(solve_id).get()
 
-@app.route('/privacy')
-def privacy():
-    return render_template('policy.html')
+    if not solve_doc:
+        return Response(response = "", status = 404, mimetype='application/json')
+
+    solve = Solve.from_dict(solve_doc.to_dict())
+
+    owner = User.from_dict(db.collection('users').document(solve.owner).get().to_dict())
+    data = {'solve': solve, 'owner': owner}
+
+    return render_template('sharedSolve.html', solve = solve, owner = owner)
+
+@app.route('/edit_solve/<solve_id>', methods = ['GET', 'POST'])
+def edit_solve(solve_id):
+    form = EditSolve()
+
+    if form.validate_on_submit():
+        solve = Solve.from_dict(db.collection('solves').document(solve_id).get().to_dict())
+
+        solve.scramble = form.scramble.data
+        solve.comment = form.comment.data
+        solve.time = form.solve_time.data
+
+        db.collection('solves').document(solve.id).set(solve.to_dict())
+
+        if form.penalties.data == 'DNF':
+            solve.is_dnf = True
+            solve.is_plus_2 = False
+
+
+        elif form.penalties.data == 'plus2':
+            solve.is_plus_2 = True
+            solve.is_dnf = False
+
+
+        else:
+            solve.is_plus_2 = False
+            solve.is_dnf = False
+
+        flash('Solve updated', 'info')
+        return redirect(url_for('solves'))
+
+    try:
+        if is_owner(solve_id, current_user.id):
+            solve = Solve.from_dict(db.collection('solves').document(solve_id).get().to_dict())
+
+            return render_template('edit_solve.html', solve = solve, form = form)
+        
+        flash('You are not the owner of that solve!', 'danger')
+        return redirect(url_for('solves')) 
+
+    except Exception as e:
+        flash('An unknown error occured', 'danger')
+        print(traceback.format_exc())
+        return redirect(url_for('solves'))
 
 #* Database and solves management
 
@@ -138,7 +196,8 @@ def save_solve():
             'date': arrow.utcnow().format('YYYY-MM-DD HH:mm:ss'),
             'puzzle': data['puzzle'],
             'owner': data['owner'],
-            'id': doc_ref.get().id
+            'id': doc_ref.get().id,
+            'comment': ""
         })
         
         return Response("", 200, mimetype='application/json')
@@ -147,29 +206,29 @@ def save_solve():
         print(e)
         return Response(response = "", status = 500, mimetype='application/json') 
 
+@app.route('/delete_solve/<solve_id>')
+def delete_solve(solve_id):
+    if not is_owner(solve_id, current_user.id):
+        flash('You are not the owner of that solve!', 'danger')
+        return redirect(url_for('solves')) 
+
+    db.collection('solves').document(solve_id).delete()
+    flash('Solve deleted.', 'info')
+
+    return redirect(url_for('solves'))
+   
+
 # This route returns the solves of the user, this is made like this 
 # to improve loading times of the /solves route
 @app.route('/api/getSolveData/<owner_id>')
 def get_solve_data(owner_id):
+    '''
+    Gets all the solves from the user
+    '''
 
     solves = get_user_solves(owner_id)
 
     return render_template('solvesOutput.html', solves = solves)
-
-
-@app.route('/shared/solve/<solve_id>')
-def shared_solve(solve_id):
-    solve_doc = db.collection('solves').document(solve_id).get()
-
-    if not solve_doc:
-        return Response(response = "", status = 404, mimetype='application/json')
-
-    solve = Solve.from_dict(solve_doc.to_dict())
-
-    owner = User.from_dict(db.collection('users').document(solve.owner).get().to_dict())
-    data = {'solve': solve, 'owner': owner}
-
-    return render_template('sharedSolve.html', solve = solve, owner = owner)
 
 @app.route('/api/setDNF/<user_id>', methods = ['POST'])
 def set_dnf(user_id):
