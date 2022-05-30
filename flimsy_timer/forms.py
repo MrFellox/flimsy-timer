@@ -1,5 +1,7 @@
+from typing import Text
+from flask import Flask
 from flask_wtf import FlaskForm
-from wtforms import EmailField, PasswordField, SubmitField, StringField
+from wtforms import EmailField, PasswordField, SubmitField, StringField, FloatField, TextAreaField, RadioField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 class LoginForm(FlaskForm):
@@ -14,3 +16,11 @@ class RegisterForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
    
     submit = SubmitField('Register')
+
+class EditSolve(FlaskForm):
+    solve_time = FloatField('Solve Time', validators=[DataRequired()])
+
+    penalties = RadioField('Penalties', choices=[(None, 'No Penalties'), ('DNF', 'DNF'), ('plus2', '+2')], validators=[DataRequired()])
+
+    scramble = TextAreaField('Scramble', validators=[DataRequired(), Length(min=3, max=100)])
+    comment = TextAreaField('Comment')
