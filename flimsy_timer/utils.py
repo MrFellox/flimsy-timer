@@ -28,3 +28,20 @@ def get_user_solves(owner_id: str) -> List[Solve]:
     solves.sort(key = lambda solve: solve.date, reverse = True)
 
     return solves
+    
+def is_owner(solve_id, user_id):
+    '''
+    Checks if user is owner of the solve
+    '''
+
+    solve = Solve.from_dict(db.collection('solves').document(solve_id).get().to_dict())
+
+    if solve.owner == user_id:
+        return True
+
+    return False
+
+    if solve.owner == user_id:
+        return True
+    else:
+        return False
